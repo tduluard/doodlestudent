@@ -24,7 +24,6 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
               "node_modules/primeicons/primeicons.css",
@@ -96,7 +95,6 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -129,8 +127,5 @@
         }
       }
     }},
-  "defaultProject": "tlcfront",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "tlcfront"
 }

@@ -1,0 +1,10 @@
+.kanban-column-header {
+  font-weight: bold;
+  text-align: center;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
