@@ -40,6 +40,10 @@ import { Selecteddate4userPipePipe } from './selecteddate4user-pipe.pipe';
 import { ModalPollClosComponent } from './modal-poll-clos/modal-poll-clos.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { ShowCommentsComponent } from './show-comments/show-comments.component';
+import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
+import { KanbanColumnComponent } from './kanban-column/kanban-column.component';
+import { KanbanCardComponent } from './kanban-card/kanban-card.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 registerLocaleData(localeFr, 'fr');
 @NgModule({
@@ -55,7 +59,10 @@ registerLocaleData(localeFr, 'fr');
     Selecteddate4userPipePipe,
     ModalPollClosComponent,
     TopBarComponent,
-    ShowCommentsComponent
+    ShowCommentsComponent,
+    KanbanBoardComponent,
+    KanbanColumnComponent,
+    KanbanCardComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +83,7 @@ registerLocaleData(localeFr, 'fr');
     SelectButtonModule,
     MenubarModule,
     CheckboxModule,
+    DragDropModule,
     NgbModule
   ],
   providers: [],

@@ -114,6 +114,11 @@
 			<artifactId>etherpad_lite_client</artifactId>
 			<version>1.2.13</version>
 		</dependency>
+	  <dependency>
+		  <groupId>net.bytebuddy</groupId>
+		  <artifactId>byte-buddy</artifactId>
+		  <version>1.14.7</version>
+	  </dependency>
 		<!-- https://mvnrepository.com/artifact/org.mnode.ical4j/ical4j -->
 		<dependency>
 			<groupId>org.mnode.ical4j</groupId>
