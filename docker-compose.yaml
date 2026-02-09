@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=tlc
+      - MYSQL_USER=tlc
+      - MYSQL_PASSWORD=tlc
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  etherpad:
+    image: etherpad/etherpad
+    ports:
+      - "9001:9001"
+    environment:
+      AUTHENTICATION_METHOD: "apikey"
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    volumes:
+      - ./APIKEY.txt:/opt/etherpad-lite/APIKEY.txt:ro
+
+  mail:
+    image: bytemark/smtp
+    restart: always
+    ports:
+      - "2525:25"
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:mysql://db:3306/tlc
+      QUARKUS_DATASOURCE_USERNAME: tlc
+      QUARKUS_DATASOURCE_PASSWORD: tlc
+      QUARKUS_MAILER_HOST: mail
+      QUARKUS_MAILER_PORT: 25
+      ETHERPAD_HOST: http://etherpad:9001
+      ETHERPAD_APIKEY_PATH: /app/APIKEY.txt
+    volumes:
+      - ./APIKEY.txt:/app/APIKEY.txt:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
+      etherpad:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
