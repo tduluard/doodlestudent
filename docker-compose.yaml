@@ -23,7 +23,7 @@ services:
       AUTHENTICATION_METHOD: "apikey"
       NODE_TLS_REJECT_UNAUTHORIZED: "0"
     volumes:
-      - ./APIKEY.txt:/opt/etherpad-lite/APIKEY.txt:ro
+      - ./api/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt:ro
 
   mail:
     image: bytemark/smtp
@@ -38,10 +38,13 @@ services:
       QUARKUS_DATASOURCE_PASSWORD: tlc
       QUARKUS_MAILER_HOST: mail
       QUARKUS_MAILER_PORT: 25
-      ETHERPAD_HOST: http://etherpad:9001
+      ETHERPAD_HOST: http://etherpad:9001/api/
       ETHERPAD_APIKEY_PATH: /app/APIKEY.txt
+      DOODLE_INTERNALPADURL: http://etherpad:9001/
+      DOODLE_EXTERNALPADURL: https://tlc-talame.fr/pad/
+      DOODLE_PADAPIKEY: 19d89ca52bc0fa4f19d6325464d9d7a032649b9fa68c111514627081e2784b4a
     volumes:
-      - ./APIKEY.txt:/app/APIKEY.txt:ro
+      - ./api/APIKEY.txt:/app/APIKEY.txt:ro
     depends_on:
       db:
         condition: service_healthy
