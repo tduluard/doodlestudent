@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   db:
-    image: mysql:8.0
+    image: mysql:5.7
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -31,7 +31,7 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./api
     environment:
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:mysql://db:3306/tlc
       QUARKUS_DATASOURCE_USERNAME: tlc
@@ -52,8 +52,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
-    # On ne l'expose plus sur le port 80 directement, le proxy s'en chargera
+      context: ./front
 
   proxy:
     image: nginx:alpine
