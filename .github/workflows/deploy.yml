@@ -1,0 +1,31 @@
+name: CI/CD Production
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Déploiement sur VM
+    runs-on: self-hosted
+
+    steps:
+      # Étape 1 : Git Checkout
+      - name: Récupération du code source
+        uses: actions/checkout@v4
+
+      # Étape 2 : Arrêt propre
+      - name: Arrêt des anciens services
+        run: docker compose down --remove-orphans
+
+      # Étape 3 : Build et Lancement
+      - name: Reconstruction et redémarrage (Build & Up)
+        run: docker compose up -d --build
+
+      # Étape 4 : Nettoyage (Maintenance)
+      - name: Nettoyage des images inutiles (Prune)
+        run: docker image prune -f
+
+      # Étape 5 : Vérification (Optionnel mais recommandé)
+      - name: Vérification de l'état des conteneurs
+        run: docker compose ps
