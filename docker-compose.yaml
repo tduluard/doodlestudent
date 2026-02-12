@@ -11,7 +11,7 @@ services:
       - MYSQL_USER=tlc
       - MYSQL_PASSWORD=tlc
     volumes:
-      - ../db_data:/var/lib/mysql
+      - /home/talame/projet-tlc/db_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 5s
@@ -25,7 +25,7 @@ services:
       AUTHENTICATION_METHOD: "apikey"
       NODE_TLS_REJECT_UNAUTHORIZED: "0"
     volumes:
-      - ./APIKEY.txt:/opt/etherpad-lite/APIKEY.txt:ro
+      - ./api/APIKEY.txt:/opt/etherpad-lite/APIKEY.txt:ro
 
   # --- MAIL ---
   mail:
@@ -48,7 +48,7 @@ services:
       DOODLE_EXTERNALPADURL: https://tlc-talame.fr/pad/
       DOODLE_PADAPIKEY: 19d89ca52bc0fa4f19d6325464d9d7a032649b9fa68c111514627081e2784b4a
     volumes:
-      - ./APIKEY.txt:/app/APIKEY.txt:ro
+      - ./api/APIKEY.txt:/app/APIKEY.txt:ro
     depends_on:
       db:
         condition: service_healthy
@@ -69,7 +69,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ../nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - /home/talame/projet-tlc/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - frontend
@@ -82,7 +82,7 @@ services:
     container_name: prometheus
     restart: unless-stopped
     volumes:
-      - ../monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /home/talame/projet-tlc/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
